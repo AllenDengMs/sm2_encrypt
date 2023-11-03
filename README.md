@@ -1,17 +1,34 @@
-# sm2_encrypt
+# Java版SM2 SM3 SM4
+
 
 简单封装BC库的，实现SM2、SM3、SM4常用的加密、解密。和JS版本通用。
+
 Js版：https://github.com/JuneAndGreen/sm-crypto
 
-加密/解密 性能测试：
-=========== 测试Sm2签名/验签性能  ===========
-字符长度5000，SM2签名时间（毫秒）: 0.65
-字符长度5000，SM2验签密时间（毫秒）: 0.30
 
-=========== 测试Sm2加密性能 ===========
-字符长度5000，SM2加密时间（毫秒）: 0.90
-字符长度5000，SM2解密密时间（毫秒）: 0.40
+```java
+// SM2
+// 生成公钥私钥
+Keypair keypair = Sm2Tool.generateKeyPair();
+String serverPrivateKey = keypair.getPrivateKey();
+String serverPublicKey = keypair.getPublicKey();
 
-=========== 测试Sm4加密性能 ===========
-字符长度5000，SM4加密时间（毫秒）: 0.23
-字符长度5000，SM4解密时间（毫秒）: 0.14
+// 加密、解密
+String data = "Test Data";
+String encryptData = Sm2Tool.encrypt(data, serverPublicKey); // 加密
+Sm2Tool.decrypt(encryptData, serverPrivateKey) // 解密
+
+// 签名验签
+String data = "Hello";
+String sign = Sm2Tool.sign(data, privateKeyFromJS); // 签名
+boolean isCorrect = Sm2Tool.verifySign(data, sign, publicKeyFromJS); // 验签
+
+// Sm3
+Sm3Tool.hash("data");
+
+// Sm4
+String sm4Key = Sm4Tool.generateKey();
+String data = "abc";
+String encrypt = Sm4Tool.encrypt(data, sm4Key); // 加密
+Sm4Tool.decrypt(encrypt, sm4Key); // 解密
+```
