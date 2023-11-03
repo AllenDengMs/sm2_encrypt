@@ -38,13 +38,8 @@ public class Sm2Tool {
   private static final ECParameterSpec ecParameterSpec = new ECParameterSpec(
       x9ECParameters.getCurve(), x9ECParameters.getG(), x9ECParameters.getN());
 
-  /**
-   * BC库的Provider名词
-   */
-  public static final String BC_PROVIDE_NAME = "BC";
-
   static {
-    if (Security.getProvider(BC_PROVIDE_NAME) == null) {
+    if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
       Security.addProvider(new BouncyCastleProvider());
     }
   }
@@ -68,7 +63,7 @@ public class Sm2Tool {
    */
   public static Keypair generateKeyPair() {
     try {
-      KeyPairGenerator kpGen = KeyPairGenerator.getInstance("EC", BC_PROVIDE_NAME);
+      KeyPairGenerator kpGen = KeyPairGenerator.getInstance("EC", BouncyCastleProvider.PROVIDER_NAME);
       kpGen.initialize(ecParameterSpec, new SecureRandom());
       KeyPair kp = kpGen.generateKeyPair();
 
@@ -220,6 +215,10 @@ public class Sm2Tool {
     }
   }
 
+  public static String sign(String data, String privateKeyHex) {
+    return sign(data, privateKeyHex, null);
+  }
+
   /**
    * 验签
    * @param data 原文
@@ -248,6 +247,10 @@ public class Sm2Tool {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public static boolean verifySign(String data, String signText, String publicKeyHex) {
+    return verifySign(data, signText, publicKeyHex, null);
   }
 
   public static class Keypair {

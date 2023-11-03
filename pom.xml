@@ -17,9 +17,7 @@
   </properties>
 
   <dependencies>
-    <!--
-      BC库在1.59版本之后实现了国密
-    -->
+    <!-- BC库在1.59版本之后实现了国密 -->
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcpkix-jdk15on</artifactId>
