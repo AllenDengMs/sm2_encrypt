@@ -15,15 +15,15 @@ public class SmTest {
   private static String privateKeyFromJS = "8c30bed6088fa995e10db01700b5fb22591757aca1dea9fc20b8ecf89bb68938";
 
   public static void main(String[] args) {
-    testSm2Encrypt(); // 加密、解密
-    testSm2Sign(); // 签名、验签
-
-    testSm3(); // sm3加密
-    testSm4Encrypt(); // sm4加密
+//    testSm2Encrypt(); // 加密、解密
+//    testSm2Sign(); // 签名、验签
+//
+//    testSm3(); // sm3加密
+//    testSm4Encrypt(); // sm4加密
 
     testSm2SignPerformance(); // 签名速度测试
-    testSm4Performance(); // 加密速度测试
     testSm2EncryptPerformance(); // 加密速度测试
+    testSm4Performance(); // 加密速度测试
   }
 
   /**
