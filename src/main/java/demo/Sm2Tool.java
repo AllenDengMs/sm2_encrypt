@@ -28,7 +28,7 @@ import org.bouncycastle.jce.spec.ECPublicKeySpec;
 import org.bouncycastle.pqc.math.linearalgebra.ByteUtils;
 import org.bouncycastle.util.encoders.Hex;
 
-public class Sm2EncryptTool {
+public class Sm2Tool {
 
   // 加密模式
   private static final Mode CIPHER_MODE = Mode.C1C3C2;
@@ -49,7 +49,7 @@ public class Sm2EncryptTool {
     }
   }
 
-  private Sm2EncryptTool() {
+  private Sm2Tool() {
   }
 
   /**

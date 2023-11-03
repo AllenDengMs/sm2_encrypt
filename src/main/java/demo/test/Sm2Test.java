@@ -1,7 +1,7 @@
 package demo.test;
 
-import demo.Sm2EncryptTool;
-import demo.Sm2EncryptTool.Keypair;
+import demo.Sm2Tool;
+import demo.Sm2Tool.Keypair;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -28,19 +28,19 @@ public class Sm2Test {
   private static void testSm2Encrypt() {
     System.out.println("=========== 测试sm2加密/解密 ===========");
     // 生成公钥私钥
-    Keypair keypair = Sm2EncryptTool.generateKeyPair();
+    Keypair keypair = Sm2Tool.generateKeyPair();
     String serverPrivateKey = keypair.getPrivateKey();
     String serverPublicKey = keypair.getPublicKey();
 
     // 加密、解密
     String data = "Test Data";
-    String encryptData = Sm2EncryptTool.encrypt(data, serverPublicKey);
+    String encryptData = Sm2Tool.encrypt(data, serverPublicKey);
     System.out.println("encryptData: " + encryptData);
-    System.out.println("decryptData: " + Sm2EncryptTool.decrypt(encryptData, serverPrivateKey));
+    System.out.println("decryptData: " + Sm2Tool.decrypt(encryptData, serverPrivateKey));
 
     // 使用js生成公钥密码进行加密解密
     System.out.println(
-        Sm2EncryptTool.decrypt(Sm2EncryptTool.encrypt("Test Js Key", publicKeyFromJS),
+        Sm2Tool.decrypt(Sm2Tool.encrypt("Test Js Key", publicKeyFromJS),
             privateKeyFromJS));
   }
 
@@ -57,9 +57,9 @@ public class Sm2Test {
     System.out.println("=========== 测试Sm2签名、验签 ===========");
     String data = "A02";
     String id = "1380";
-    String sign = Sm2EncryptTool.sign(data, privateKeyFromJS, id);
+    String sign = Sm2Tool.sign(data, privateKeyFromJS, id);
     System.out.println("签名结果：" + sign);
-    boolean b = Sm2EncryptTool.verifySign(data, sign, publicKeyFromJS, id);
+    boolean b = Sm2Tool.verifySign(data, sign, publicKeyFromJS, id);
     System.out.println("验签结果：" + b);
   }
 
@@ -71,18 +71,18 @@ public class Sm2Test {
     int count = 100; // 测试时间
     long sm2EncrypttimeCount = 0;
     long sm2DtimeCount = 0;
-    Keypair keys = Sm2EncryptTool.generateKeyPair();
+    Keypair keys = Sm2Tool.generateKeyPair();
     String publicKey = keys.getPublicKey();
     String privateKey = keys.getPrivateKey();
-    Sm2EncryptTool.decrypt(Sm2EncryptTool.encrypt(testPerformanceData, publicKey), privateKey); // 初始化
+    Sm2Tool.decrypt(Sm2Tool.encrypt(testPerformanceData, publicKey), privateKey); // 初始化
     for (int i = 0; i < count; i++) {
       long startTime1 = System.currentTimeMillis();
-      String encrypt = Sm2EncryptTool.encrypt(testPerformanceData, publicKey);
+      String encrypt = Sm2Tool.encrypt(testPerformanceData, publicKey);
       long eTime = System.currentTimeMillis() - startTime1;
       sm2EncrypttimeCount += eTime;
 
       long startTime = System.currentTimeMillis();
-      Sm2EncryptTool.decrypt(encrypt, privateKey);
+      Sm2Tool.decrypt(encrypt, privateKey);
       long dTime = System.currentTimeMillis() - startTime;
       sm2DtimeCount += dTime;
     }
@@ -98,18 +98,18 @@ public class Sm2Test {
     int count = 100; // 测试时间
     long sm2SignTimeCount = 0;
     long sm2VerifyTimeCount = 0;
-    Keypair keys = Sm2EncryptTool.generateKeyPair();
+    Keypair keys = Sm2Tool.generateKeyPair();
     String publicKey = keys.getPublicKey();
     String privateKey = keys.getPrivateKey();
-    Sm2EncryptTool.verifySign(testPerformanceData, Sm2EncryptTool.sign(testPerformanceData, privateKey, id), publicKey, id); // 初始化
+    Sm2Tool.verifySign(testPerformanceData, Sm2Tool.sign(testPerformanceData, privateKey, id), publicKey, id); // 初始化
     for (int i = 0; i < count; i++) {
       long startTime1 = System.currentTimeMillis();
-      String sign = Sm2EncryptTool.sign(testPerformanceData, privateKey, id);
+      String sign = Sm2Tool.sign(testPerformanceData, privateKey, id);
       long eTime = System.currentTimeMillis() - startTime1;
       sm2SignTimeCount += eTime;
 
       long startTime = System.currentTimeMillis();
-      Sm2EncryptTool.verifySign(testPerformanceData, sign, publicKey, id);
+      Sm2Tool.verifySign(testPerformanceData, sign, publicKey, id);
       long dTime = System.currentTimeMillis() - startTime;
       sm2VerifyTimeCount += dTime;
     }
